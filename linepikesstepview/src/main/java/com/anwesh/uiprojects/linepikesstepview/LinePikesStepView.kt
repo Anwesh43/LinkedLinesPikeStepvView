@@ -214,4 +214,12 @@ class LinePikesStepView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+        fun create(activity: Activity) : LinePikesStepView {
+            val view : LinePikesStepView = LinePikesStepView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
