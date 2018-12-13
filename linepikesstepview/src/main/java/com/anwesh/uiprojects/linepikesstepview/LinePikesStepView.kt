@@ -18,6 +18,7 @@ val scGap : Float = 0.05f
 val color : Int = Color.parseColor("#2980b9")
 val strokeFactor : Int = 90
 val sizeFactor : Float = 2.1f
+val DELAY : Long = 25
 
 fun Int.getInverse()  : Float = 1f / this
 
@@ -101,7 +102,7 @@ class LinePikesStepView(ctx : Context) : View(ctx) {
             if (animated) {
                 cb()
                 try {
-                    Thread.sleep(50)
+                    Thread.sleep(DELAY)
                     view.invalidate()
                 } catch (ex : Exception) {
 
