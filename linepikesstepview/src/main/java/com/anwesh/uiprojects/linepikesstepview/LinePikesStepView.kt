@@ -120,4 +120,49 @@ class LinePikesStepView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class LPSNode(var i : Int, val state : State = State()) {
+
+        private var next : LPSNode? = null
+
+        private var prev : LPSNode? = null
+
+        init {
+            addNeighbor()
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawLPSNode(i, state.scale, paint)
+            next?.draw(canvas, paint)
+        }
+
+        fun addNeighbor() {
+            if (i < nodes - 1) {
+                next = LPSNode(i + 1)
+                next?.prev = this
+            }
+        }
+
+        fun update(cb : (Int, Float) -> Unit) {
+            state.update {
+                cb(i, it)
+            }
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            state.startUpdating(cb)
+        }
+
+        fun getNext(dir : Int, cb : () -> Unit) : LPSNode {
+            var curr : LPSNode? = prev
+            if (dir == 1) {
+                curr = next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
+        }
+    }
 }
