@@ -17,7 +17,7 @@ val scDiv : Double = 0.51
 val scGap : Float = 0.05f
 val color : Int = Color.parseColor("#2980b9")
 val strokeFactor : Int = 90
-val sizeFactor : Float = 2.1f
+val sizeFactor : Float = 2.4f
 val DELAY : Long = 25
 
 fun Int.getInverse()  : Float = 1f / this
@@ -33,7 +33,7 @@ fun Float.updateScale(dir : Float, a : Int, b : Int) : Float = dir * scGap * mir
 fun Canvas.drawLPSNode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
-    val gap : Float = w / (nodes + 1)
+    val gap : Float = h / (nodes + 1)
     val sc1 : Float = scale.divideScale(0, 2)
     val sc2 : Float = scale.divideScale(1, 2)
     val size : Float = gap / sizeFactor
@@ -42,7 +42,7 @@ fun Canvas.drawLPSNode(i : Int, scale : Float, paint : Paint) {
     paint.strokeWidth = Math.min(w, h) / strokeFactor
     paint.strokeCap = Paint.Cap.ROUND
     save()
-    translate(gap * (i + 1), h/2)
+    translate(w/2, gap * (i + 1))
     for (j in 0..1) {
         val scj : Float = sc1.divideScale(j, 2)
         save()
