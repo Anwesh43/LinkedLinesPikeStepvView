@@ -15,9 +15,9 @@ val nodes : Int = 5
 val lines : Int = 4
 val scDiv : Double = 0.51
 val scGap : Float = 0.05f
-val color : Int = Color.parseColor("#e74c3c")
+val color : Int = Color.parseColor("#2980b9")
 val strokeFactor : Int = 90
-val sizeFactor : Float = 2.5f
+val sizeFactor : Float = 2.1f
 
 fun Int.getInverse()  : Float = 1f / this
 
@@ -45,13 +45,13 @@ fun Canvas.drawLPSNode(i : Int, scale : Float, paint : Paint) {
     for (j in 0..1) {
         val scj : Float = sc1.divideScale(j, 2)
         save()
-        rotate(j * -90f * (1 - sc2))
+        rotate(-j * (90f + 90f * sc2))
         drawLine(0f, 0f, size, 0f, paint)
         for (k in 0..(lines - 1)) {
             val sck : Float = scj.divideScale(k, lines)
             save()
             translate(xGap * (k + 1), 0f)
-            drawLine(0f, 0f, 0f, -xGap * sck, paint)
+            drawLine(0f, 0f, 0f, -xGap * sck * (1 - 2 * j), paint)
             restore()
         }
         restore()
