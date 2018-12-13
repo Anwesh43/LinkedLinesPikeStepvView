@@ -46,6 +46,7 @@ fun Canvas.drawLPSNode(i : Int, scale : Float, paint : Paint) {
         val scj : Float = sc1.divideScale(j, 2)
         save()
         rotate(j * -90f * (1 - sc2))
+        drawLine(0f, 0f, size, 0f, paint)
         for (k in 0..(lines - 1)) {
             val sck : Float = scj.divideScale(k, lines)
             save()
@@ -163,6 +164,31 @@ class LinePikesStepView(ctx : Context) : View(ctx) {
             }
             cb()
             return this
+        }
+    }
+
+    data class LinePikesStep(var i : Int) {
+
+        private var dir : Int = 1
+
+        private val root : LPSNode = LPSNode(0)
+        private var curr : LPSNode = root
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            root.draw(canvas, paint)
+        }
+
+        fun update(cb : (Int, Float) -> Unit) {
+            curr.update {i, sc ->
+                curr = curr.getNext(dir) {
+                    dir *= -1
+                }
+                cb(i, sc)
+            }
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            curr.startUpdating(cb)
         }
     }
 }
